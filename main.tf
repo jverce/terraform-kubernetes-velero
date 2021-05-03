@@ -2,10 +2,10 @@ resource "kubernetes_namespace" "this" {
   count = var.namespace_deploy ? 1 : 0
 
   metadata {
-    name = var.name
+    name = local.namespace_name
 
     labels = {
-      name        = var.name
+      name        = local.namespace_name
       description = var.description
     }
   }
@@ -13,11 +13,11 @@ resource "kubernetes_namespace" "this" {
 
 data "kubernetes_namespace" "this" {
   metadata {
-    name = var.name
+    name = local.namespace_name
   }
 
   depends_on = [
-    kubernetes_namespace.this
+    kubernetes_namespace.this,
   ]
 }
 
